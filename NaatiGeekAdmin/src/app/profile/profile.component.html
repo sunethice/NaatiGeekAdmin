@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg py-3" style="background-color: #012d6b;" >
+    <!-- <div class="navbar-collapse collapse w-100 order-1 order-lg-0 menu-content">
+        <div class="navbar-nav text-white">
+            <a href="#" class="nav-item nav-link px-3 text-white active">Home</a>
+        </div>
+    </div> -->
+    <a class="navbar-brand mx-lg-auto text-white" href="#">Naati Geek</a>
+    <div class="navbar-collapse collapse w-100 order-3 menu-content">
+        <div class="navbar-nav ml-auto menu-content" >
+             <a href="#" class="nav-item nav-link px-3 text-white" (click)="logout()" >Logout</a> 
+            <!-- <a href="/signup" class="nav-item nav-link px-3 text-white">Signup</a> -->
+        </div>
+    </div>
+</nav>
+<div *ngIf="afAuth.user | async as user">
+    <div>Name: {{ user.displayName }}</div>
+    <div>Email {{ user.email }}</div>
+    <div>UserId {{ user.uid }}</div>
+</div>
