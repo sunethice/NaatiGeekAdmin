@@ -13,4 +13,15 @@ export class AppComponent implements OnInit{
   constructor(public auth: AuthService){}
 
   ngOnInit(){ }
+
+  async cpIsLogged(): Promise<boolean> {
+    console.log("cpIsLogged");
+    // const user = await this.auth.IsLoggedIn();
+    // return !!user;
+    return true;
+  }
+
+  logout(){
+    this.auth.logout();
+  }
 }

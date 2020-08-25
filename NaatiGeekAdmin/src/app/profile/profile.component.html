@@ -1,19 +1,47 @@
-<nav class="navbar navbar-expand-lg py-3" style="background-color: #012d6b;" >
-    <!-- <div class="navbar-collapse collapse w-100 order-1 order-lg-0 menu-content">
-        <div class="navbar-nav text-white">
-            <a href="#" class="nav-item nav-link px-3 text-white active">Home</a>
-        </div>
-    </div> -->
-    <a class="navbar-brand mx-lg-auto text-white" href="#">Naati Geek</a>
-    <div class="navbar-collapse collapse w-100 order-3 menu-content">
-        <div class="navbar-nav ml-auto menu-content" >
-             <a href="#" class="nav-item nav-link px-3 text-white" (click)="logout()" >Logout</a> 
-            <!-- <a href="/signup" class="nav-item nav-link px-3 text-white">Signup</a> -->
-        </div>
+<div>
+    <div *ngIf="downloadUrl | async; let srcUrl">
+        <img [src]="srcUrl" alt="profile image" class="profile-placeholder">
     </div>
-</nav>
-<div *ngIf="afAuth.user | async as user">
-    <div>Name: {{ user.displayName }}</div>
-    <div>Email {{ user.email }}</div>
-    <div>UserId {{ user.uid }}</div>
+    <div *ngIf="!(downloadUrl | async)">
+        <img src="assets/img/profile-placeholder.png" alt="profile image" class="profile-placeholder">
+    </div>
+    <input class="file-input" type="file" #fileInput (change)="fileInputChange($event)" accept=".png,.jpg">
+    <progress max="100" [value]="uploadProgress | async"></progress>
+    <button (click)="fileInput.click()">Upload Image</button>
+</div>
+<div *ngIf="item | async as userProfile">
+    <div class="d-flex justify-content-center h-100">
+		<div class="card mt-5">
+			<div class="card-body">
+				<form #userForm="ngForm" (submit)="onSubmit(userForm)" [class.loading]="loading"> 
+					<!--(1)  [formGroup]="form" (ngSubmit)="onSubmit(form.value)" : form == form in profile.component.ts-->
+                    <div class="input-group form-group">
+						<!-- (2)  formControlName="name" defined as in profile.component.ts-->
+                        <input type="text" class="form-control" name="name" placeholder="Name" [ngModel]="userProfile.name">
+                    </div>
+					<div class="input-group form-group">
+						<input type="email" class="form-control" name="email" placeholder="email"  [ngModel]="userProfile.email">
+					</div>
+                    <div class="input-group form-group">
+                        <select name="type" [ngModel]="userProfile.type">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+					</div>
+					<div class="input-group form-group">
+                        <input type="text" class="form-control" name="address" placeholder="address"  [ngModel]="userProfile.address">
+                        <input type="text" class="form-control" name="city" placeholder="city" [ngModel]="userProfile.city">
+                        <input type="text" class="form-control" name="state" placeholder="state" [ngModel]="userProfile.state">
+                        <input type="text" class="form-control" name="zip" laceholder="zip" [ngModel]="userProfile.zip">
+                    </div>
+                    <div class="input-group form-group">
+                        <input type="text" class="form-control" name="phone" placeholder="phone" [ngModel]="userProfile.phone">
+                    </div>
+					<div class="form-group">
+						<input type="submit" value="Update" class="btn float-right signup_btn">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

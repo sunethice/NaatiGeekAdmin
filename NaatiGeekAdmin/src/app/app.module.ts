@@ -8,7 +8,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { environment } from "src/environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
-// import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -36,7 +37,8 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    // AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFirestoreModule,
     FontAwesomeModule
   ],
   providers:[AngularFireAuthGuard],

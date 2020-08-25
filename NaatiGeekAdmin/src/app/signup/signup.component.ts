@@ -3,6 +3,7 @@ import { faUser,faKey,faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup,FormControl } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,7 @@ export class SignupComponent implements OnInit {
   form: FormGroup;
   loading = false;
   
-  constructor(private afAuth: AngularFireAuth, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -33,6 +34,7 @@ export class SignupComponent implements OnInit {
     try{
       const mResp = await this.afAuth.createUserWithEmailAndPassword(email, password);
       await mResp.user.updateProfile({displayName: `${firstname} ${lastname}`});
+      this.auth.createUserDocument();
       this.form.reset();
       const mUserId = mResp.user.uid;
       this.router.navigate([`/profile/${mUserId}`])

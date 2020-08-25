@@ -1,0 +1,15 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{userId}/{fileName} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    //(1) file size less than 5MB
+    //(2) content type is an image
+    match /images/{imgaeId}{
+      allow write: if request.resource.data.size() < 5 * 1024 * 1024
+        && request.resource.content.type.match('image/.*');
+    }
+  }
+}

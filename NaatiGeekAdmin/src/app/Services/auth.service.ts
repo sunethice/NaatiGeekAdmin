@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, assertPlatform } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+
+import { UserProfile } from './user-profile.model';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   subscription;
-  constructor(private afAuth:AngularFireAuth, private router:Router) { }
+  constructor(private afAuth:AngularFireAuth, private router:Router, private afs: AngularFirestore) { }
 
-  IsLoggedIn(){
+  async IsLoggedIn(){
     console.log("IsLoggedIn");
-    return !!this.afAuth.authState.pipe(first()).toPromise();;
+    return !!(await this.afAuth.currentUser);
+    // return !!this.afAuth.authState.pipe(first()).toPromise();;
     // return this.afAuth.authState.pipe(first()).toPromise();
     // const subscription = this.afAuth.authState.subscribe(res => {
     //   let isLoggedIn = false;
@@ -43,23 +47,40 @@ export class AuthService {
     
   }
 
-  onIsLoggedInResolve(res){
-    let isLoggedIn = false;
-    if (res && res.uid) {
-      console.log("a");
-      isLoggedIn = true;
-    } 
-    else{
-      console.log("b");
-      isLoggedIn = false;
+  async createUserDocument(){
+    //get the current user
+    const user = await this.afAuth.currentUser;
+
+    //create the object with new data
+    const mUserProfile : UserProfile = {
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName,
+      type:"",
+      phone:"0426394747",
+      address:"",
+      city:"",
+      state:"",
+      zip:""
+
     }
-    
-    return isLoggedIn;
+
+    //write to cloud firestore
+    return this.afs.collection('users').doc(`${user.uid}`).set(mUserProfile);
+
   }
 
-  onIsLoggedInReject(res){
-    console.log(`reject response : ${res}`);
+  async updateUserDocument(pUser: UserProfile){
+    return this.afs.collection('users').doc(`${pUser.uid}`).update(pUser);
+    // const user = this.afs.collection('users').doc(`${pUser.uid}`).get();
+
+    // let { type, phone, address, city, state, zip } = user;
+
+    // type = pUser.type;
+
   }
+
+  
 
   logout(){
     this.afAuth.signOut();
