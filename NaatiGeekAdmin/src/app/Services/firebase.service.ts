@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -7,17 +7,14 @@ import { Injectable } from '@angular/core';
 
 export class FirebaseService {
 
-  // constructor(private firestore: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) { }
 
-  cpAddNewWord(pData:Object) :void { }
+  cpAddToCollection(pData:Object) :void { }
 
-  getVocabList() { 
-    // console.log(this.firestore.collection("Vocabulary"));
-
-    // this.firestore.collection("users").get().then((querySnapshot) => {
-    //   querySnapshot.forEach((doc) => {
-    //       console.log(`${doc.id} => ${doc.data()}`);
-    //   });
-    // });
+  cpSearchCollection(pStrCollection, 
+                     pStrKey, 
+                     pStrOp:firebase.firestore.WhereFilterOp = '==', 
+                     pStrValue = "") { 
+    return this.afs.collection(pStrCollection, ref => ref.where(pStrKey, pStrOp, pStrValue));
   }
 }

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../Services/firebase.service';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-main-panel',
@@ -8,26 +12,24 @@ import { FirebaseService } from '../Services/firebase.service';
 })
 
 export class MainPanelComponent implements OnInit {
-  vacabList;
-  constructor(private fireService: FirebaseService) { }
+  wordDoc: {};
+  items: Observable<any[]>;
+  searchString$ = new Subject<string>();
+
+  constructor(private fireService: FirebaseService, private fs: FirebaseService) { }
 
   ngOnInit(): void {
-    this.getVocablist();
+    this.searchString$
+      .pipe(debounceTime(400))
+      .subscribe(x => this.cpCheckForAvailability(x));
   }
 
-  getVocablist(): void{
-    // this.fireService.getVocabList()
-    // .subscribe(
-    //   res => (
-    //     this.onGetVocabList(res)
-    //   ) 
-    // );  
-    // console.log(this.vacabList);
+  cpInputChanged(event){
+    const mStrWord = event.target.value;
+    this.searchString$.next(mStrWord);
   }
 
-  onGetVocabList(pRes):void{
-    this.vacabList = pRes;
-    console.log(this.vacabList);
+  cpCheckForAvailability(pSearchStr){
+    this.items = this.fs.cpSearchCollection('Vocabulary', 'english', '==', pSearchStr).valueChanges();    
   }
-
 }

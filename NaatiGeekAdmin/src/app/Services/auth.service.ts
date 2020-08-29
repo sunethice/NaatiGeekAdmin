@@ -15,7 +15,10 @@ export class AuthService {
 
   async IsLoggedIn(){
     console.log("IsLoggedIn");
-    return !!(await this.afAuth.currentUser);
+     
+    const isLogged = !!(await this.afAuth.currentUser);
+    // (await this.afAuth.currentUser).unlink;
+    return isLogged;
     // return !!this.afAuth.authState.pipe(first()).toPromise();;
     // return this.afAuth.authState.pipe(first()).toPromise();
     // const subscription = this.afAuth.authState.subscribe(res => {

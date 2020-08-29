@@ -5,11 +5,20 @@
     <div class="col-8 p-5">
         <div class="container-fluid px-0">
             <div class="wrapper">
-                <div>Enter English word: </div>
-                <input type="text"/>
-                <!-- <div *ngFor="let vacab of vacabList">
-                    <div>{{ vacab.payload.doc.data().English }}</div>
-                </div> -->
+                <form #wordForm="ngForm">
+                    <label>Enter English word: </label>
+                    <input type="text" (keyup)="cpInputChanged($event)"/>
+                </form>
+                <div *ngIf="wordDoc">
+                    <div>wordDoc</div>
+                </div>
+                <div>
+                    <ul>
+                        <li *ngFor="let item of items | async">
+                          {{ item | json }}
+                        </li>
+                      </ul>
+                </div>
             </div>
         </div>
     </div>

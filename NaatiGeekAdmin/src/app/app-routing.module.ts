@@ -26,7 +26,12 @@ const routes: Routes = [
     canActivate: [ AngularFireAuthGuard ], 
     data: { authGuardPipe: onlyAllowSelf }
   },
-  { path: 'main', component: MainPanelComponent }
+  { 
+    path: 'main', 
+    component: MainPanelComponent,
+    canActivate: [ AngularFireAuthGuard ], 
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
+  }
 ];
 
 @NgModule({
