@@ -16,7 +16,7 @@
                         <div>
                             <label>Chose relevant categories</label>
                         </div>
-                        <div *ngFor="let cat of addWords.controls.categories.controls; let i=index">
+                        <div *ngFor="let cat of addWords.get('categories')['controls']; let i=index">
                             <input name="" type="checkbox" [formControl]="cat"/> {{mainCategories.catList[i].name}}
                         </div>
                         <!-- <div *ngFor="let cat of mainCategories">
