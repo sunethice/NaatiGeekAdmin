@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
     AngularFirestoreModule,
     FontAwesomeModule
   ],
-  providers:[AngularFireAuthGuard],
+  providers:[AngularFireAuthGuard, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

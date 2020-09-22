@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent implements OnInit{
 
   title = 'NaatiGeekAdmin';
 
-  constructor(public auth: AuthService){}
+  constructor(public auth: AuthService, private router:Router){}
 
   ngOnInit(){ }
 
@@ -23,5 +24,9 @@ export class AppComponent implements OnInit{
 
   logout(){
     this.auth.logout();
+  }
+
+  goToMain(){
+    this.router.navigate([`/main`]);
   }
 }

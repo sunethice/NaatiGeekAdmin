@@ -1,59 +1,77 @@
-<div class="row w-100 h-100">
-    <div class="col-2 side-panel">
-
+<form [formGroup]="addWords" (ngSubmit)="cpOnSubmit(addWords.value)">
+    <div class="input-group form-group">
+        <input class="form-control" type="text" formControlName="english" (keyup)="cpInputChanged($event)" placeholder="English Word"/>
     </div>
-    <div class="col-8 p-5">
-        <div class="container">
-            <div class="d-flex justify-content-center h-100">
-                <div class="w-100">
-                    <form [formGroup]="addWords" (ngSubmit)="cpOnSubmit(addWords.value)">
-                        <div class="input-group form-group">
-                            <input class="form-control" type="text" formControlName="english" (keyup)="cpInputChanged($event)" placeholder="English Word"/>
-                        </div>
-                        <div class="input-group form-group">
-                            <input class="form-control" type="text" formControlName="sinhala" placeholder="Sinhala Word"/>
-                        </div>
-                        <div>
-                            <label>Chose relevant categories</label>
-                        </div>
-                        <div *ngFor="let cat of addWords.get('categories')['controls']; let i=index">
-                            <input name="" type="checkbox" [formControl]="cat"/> {{mainCategories.catList[i].name}}
-                        </div>
-                        <!-- <div *ngFor="let cat of mainCategories">
-                            <input type="checkbox" name="{{cat.name}}" ngModel/> {{cat.name}}
-                        </div> -->
-                        <div class="form-group btn btn-sm btn-primary">
-                            <input type="submit" value="Add" class="btn float-right login_btn">
-                        </div>
-                    </form>
-
-                    <!-- <form #wordForm="ngForm" (ngSubmit)="cpOnSubmit(wordForm.value)">
-                        <div class="input-group form-group">
-                            <input class="form-control" type="text" name="english" (keyup)="cpInputChanged($event)" placeholder="English Word" ngModel/>
-                        </div>
-                        <div class="input-group form-group">
-                            <input class="form-control" type="text" name="sinhala" placeholder="Sinhala Word" ngModel/>
-                        </div>
-                        <div>
-                            <label>Chose relevant categories</label>
-                        </div>
-                        <div *ngFor="let cat of mainCategories">
-                            <input type="checkbox" name="{{cat.name}}" ngModel/> {{cat.name}}
-                        </div>
-                        <div class="form-group btn btn-sm btn-primary">
-                            <input type="submit" value="Add" class="btn float-right login_btn">
-                        </div>
-                    </form> -->
-                    <div>
-                        <ul>
-                            <li *ngFor="let item of items | async">
-                            {{ item | json }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="input-group form-group">
+        <input class="form-control" type="text" formControlName="sinhala" placeholder="Sinhala Word"/>
     </div>
+    <div>
+        <label>Chose relevant categories</label>
+    </div>
+    <div *ngFor="let cat of addWords.get('categories')['controls']; let i=index">
+        <input name="" type="checkbox" [formControl]="cat"/> {{mainCategories.catList[i].name}}
+    </div>
+    <!-- <div *ngFor="let cat of mainCategories">
+        <input type="checkbox" name="{{cat.name}}" ngModel/> {{cat.name}}
+    </div> -->
+    <div class="form-group btn btn-sm btn-primary">
+        <input type="submit" value="Add" class="btn float-right login_btn">
+    </div>
+</form>
+
+<!-- <form #wordForm="ngForm" (ngSubmit)="cpOnSubmit(wordForm.value)">
+    <div class="input-group form-group">
+        <input class="form-control" type="text" name="english" (keyup)="cpInputChanged($event)" placeholder="English Word" ngModel/>
+    </div>
+    <div class="input-group form-group">
+        <input class="form-control" type="text" name="sinhala" placeholder="Sinhala Word" ngModel/>
+    </div>
+    <div>
+        <label>Chose relevant categories</label>
+    </div>
+    <div *ngFor="let cat of mainCategories">
+        <input type="checkbox" name="{{cat.name}}" ngModel/> {{cat.name}}
+    </div>
+    <div class="form-group btn btn-sm btn-primary">
+        <input type="submit" value="Add" class="btn float-right login_btn">
+    </div>
+</form> -->
+<div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">English Word</th>
+            <th scope="col">Sinhala Word</th>
+            <th scope="col">Categories</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Last Modified</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items | async">
+             <!--<td>
+             <span *ngIf="item.new" class="badge badge-primary">new</span>
+             {{employee.name}}
+            </td> -->
+            <td>{{item.english}}</td>
+            <td>{{item.sinhala}}</td>
+            <td></td>
+            <!-- {{item.categories | json}}</td> -->
+            <td>{{currentDTStr}}</td>
+            <td>{{item.sinhala}}</td>
+            <!-- <td>{{item.createdAt | date:'yyyy/MM/dd'}}</td> -->
+            <td>
+              <!-- <button (click)="" class="btn btn-danger btn-sm">
+                <span class="oi oi-trash"></span>
+              </button> -->
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <!-- <ul>
+        <li *ngFor="let item of items | async">
+        {{ item | json }}
+        </li>
+    </ul> -->
 </div>
 

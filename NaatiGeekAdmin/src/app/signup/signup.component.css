@@ -1,3 +1,9 @@
+.signup-container{
+    background-image: url('../../assets/img/middel-banner.png');
+    background-repeat: no-repeat;
+    background-position: 100px 100px;
+}
+
 .card{
     height: 305px;
     margin-top: auto;

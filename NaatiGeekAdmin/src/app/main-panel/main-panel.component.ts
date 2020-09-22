@@ -6,6 +6,7 @@ import { debounceTime } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { JsonPipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-main-panel',
@@ -16,6 +17,9 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 export class MainPanelComponent implements OnInit {
   items: Observable<any[]>;
   searchString$ = new Subject<string>();
+  currentDT = new Date();
+  currentDTStr: string;
+  
   addWords: FormGroup;
   mainCategories = {
     catList:[
@@ -31,12 +35,13 @@ export class MainPanelComponent implements OnInit {
     ]
   };
 
-  constructor(private fireService: FirebaseService, private fs: FirebaseService, private fb: FormBuilder) { 
+  constructor(private fireService: FirebaseService, private fs: FirebaseService, private fb: FormBuilder, private datePipe: DatePipe) { 
     this.addWords = new FormGroup({
       english : new FormControl(''),
       sinhala : new FormControl(''),
       categories : this.cpBuildCategories()
     });
+    this.currentDTStr = this.datePipe.transform(this.currentDT, 'yyyy-MM-dd');
     console.log(this.addWords);
   }
 

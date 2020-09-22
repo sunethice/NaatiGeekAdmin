@@ -1,5 +1,13 @@
+.content-wrap{
+    background-color:red;
+    height:100%;
+}
+
 .side-panel{
-    width: 20%;
-    height: 100%;
-    background-color: blueviolet;
+    background-color:blue;
+    height:100%;
+    width: 300px;
+    position:relative;
+    top:0;left:0;
+    bottom:0;right:0;
 }
